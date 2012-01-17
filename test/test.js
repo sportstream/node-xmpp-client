@@ -39,9 +39,9 @@ exports.testRoom = function(test) {
 	var MESSAGE = "Hello everybody";
 	var cpt = 0;
 	var b = new Client(conf.b, function() {
-		sys.debug(conf.b.jid.split('@')[0] + ' is connected'.red);
+		sys.debug((conf.b.jid.split('@')[0] + ' is connected').red);
 		var b_room = b.room(ROOM, function(status) {
-			sys.debug('b room is created'.green);
+			sys.debug((ROOM + ' room is created').green);
 		});
 	});
 };
