@@ -4,11 +4,11 @@ var sys = require('sys'),
 	Client = require('../lib/xmpp-client').Client,
 	conf = require('./conf').conf;
 
-exports.testClientInit = function(test) {
+/*exports.testClientInit = function(test) {
 	var c = new Client({jid: 'mathieu@gtalk.com', password:'toto'});
 	test.equals('gtalk.com', c.host);
 	test.done();
-};
+};*/
 /*
 exports.testClient = function(test) {
 	test.expect(3);
@@ -34,40 +34,18 @@ exports.testClient = function(test) {
 };
 */
 
-/*
 exports.testRoom = function(test) {
-	test.expect(1);
-	var ROOM = 'mushroom@conference.' + conf.b.jid.split('@')[1];
+	var ROOM = 'mushroom@conference.ip-10-243-73-125';
 	var MESSAGE = "Hello everybody";
 	var cpt = 0;
 	var b = new Client(conf.b, function() {
-		sys.debug('b is connected'.red);
-		sys.debug(('enter in ' + ROOM).green);
-		//console.log(sys.inspect(this, true, null));
+		sys.debug(conf.b.jid.split('@')[0] + ' is connected'.red);
 		var b_room = b.room(ROOM, function(status) {
 			sys.debug('b room is created'.green);
-			this.addListener('message', function(from, msg, stanza) {
-				sys.debug(from.yellow);
-				test.equals(MESSAGE, msg);
-				if(MESSAGE == msg) {
-					test.done();
-				}
-			});
-			var a = new Client(conf.a, function() {
-				sys.debug('a is connected'.green);
-				var a_room = a.room(ROOM, function(status) {
-					sys.debug(status.green);
-					sys.debug(this.role.green);
-					this.addListener('message', function(from, msg, stanza) {
-						sys.debug('message : ' + msg);
-					});
-					this.message(MESSAGE);
-				});
-			});
 		});
 	});
 };
-*/
+/*
 exports.testPubSub = function(test) {
 	var POEMS = 'poems';
 	var b = new Client(conf.b, function() {
@@ -93,8 +71,9 @@ exports.testPubSub = function(test) {
 		});
 	});
 };
+*/
 
-/*if(module.id == '.') {
+if(module.id == '.') {
 	var testrunner = require('nodeunit').reporters.default;
-	testrunner.run([__filename]);
-}*/
+	testrunner.run(['test.js']);
+}
