@@ -2,7 +2,8 @@ var sys = require('sys'),
 	colors = require('colors'),
 	xmpp = require('node-xmpp'),
 	Client = require('../lib/xmpp-client').Client,
-	conf = require('./conf').conf;
+	conf = require('./conf').conf,
+	http = require('http');
 
 /*exports.testClientInit = function(test) {
 	var c = new Client({jid: 'mathieu@gtalk.com', password:'toto'});
@@ -42,9 +43,75 @@ exports.testRoom = function(test) {
 		sys.debug((conf.b.jid.split('@')[0] + ' is connected').red);
 		var b_room = b.room(ROOM, function(status) {
 			sys.debug((ROOM + ' room is created').green);
+
+			addUser(
+			{
+			  type: 'add',
+			  secret: 'evriONE88',
+			  username: 'test7676',
+			  password: '1234',
+			  name: 'TEST 7676',
+			  email: 'test7676@example.com'
+			}, function(err, response)
+			{
+			  console.log(response);
+			});
 		});
 	});
 };
+
+function addUser(properties, callback)
+{
+  options = {};
+  options.host = 'ec2-107-22-57-186.compute-1.amazonaws.com';
+  options.path = '/plugins/userService/userservice' + '?' + buildQueryString(properties);
+  options.port = 9090;
+  options.method = 'GET';
+
+  adminRequest(options, callback);
+}
+
+function adminRequest(options, callback)
+{
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf8');
+    var responseData = '';
+
+    res.on('data', function (chunk)
+    {
+      responseData += chunk;
+    });
+
+    res.on('end', function ()
+    {
+      if(callback)
+        callback(null, responseData);
+    });
+
+    res.on('error', function(err)
+    {
+      console.log('RESPONSE ERROR: ' + err);
+    });
+  });
+
+  req.on('error', function(err)
+  {
+    console.log('REQUEST ERROR: ' + err);
+  });
+  req.end();
+}
+
+function buildQueryString(parameters){
+  var qs = "";
+  for(var key in parameters) {
+    var value = parameters[key];
+    qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+  }
+  if (qs.length > 0){
+    qs = qs.substring(0, qs.length-1); //chop off last "&"
+  }
+  return qs;
+}
 /*
 exports.testPubSub = function(test) {
 	var POEMS = 'poems';
