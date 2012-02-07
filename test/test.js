@@ -44,18 +44,26 @@ exports.testRoom = function(test) {
 		var b_room = b.room(ROOM, function(status) {
 			sys.debug((ROOM + ' room is created').green);
 
-			addUser(
-			{
-			  type: 'add',
-			  secret: 'evriONE88',
-			  username: 'test7676',
-			  password: '1234',
-			  name: 'TEST 7676',
-			  email: 'test7676@example.com'
-			}, function(err, response)
-			{
-			  console.log(response);
-			});
+      addUser(
+      {
+        type: 'add',
+        secret: 'evriONE88',
+        username: 'test7676',
+        password: '1234',
+        name: 'TEST 7676',
+        email: 'test7676@example.com'
+      }, function(err, response)
+      {
+        console.log(response);
+      });
+
+      //setTimeout(function()
+      //{
+        //b.destoryRoom(ROOM, function()
+        //{
+          //console.log('ROOM ' + ROOM + ' DESTROYED');
+        //});
+      //}, 10000);
 		});
 	});
 };
