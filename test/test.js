@@ -59,7 +59,7 @@ exports.testRoom = function(test) {
 
       //setTimeout(function()
       //{
-        //b.destoryRoom(ROOM, function()
+        //b.destroyRoom(ROOM, function()
         //{
           //console.log('ROOM ' + ROOM + ' DESTROYED');
         //});
